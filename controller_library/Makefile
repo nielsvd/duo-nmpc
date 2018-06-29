@@ -12,6 +12,7 @@ IFACE_OBJS+=transverse_ocp.o
 IFACE_OBJS+=tangential_ocp.o
 IFACE_OBJS+=duo_nmpc.o
 
+INC=-I$(ACADOS)
 INC=-I$(ACADOS)/include
 INC+=-I$(ACADOS)/include/blasfeo/include
 INC+=-I$(ACADOS)/include/hpipm/include
