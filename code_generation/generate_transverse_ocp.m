@@ -20,7 +20,6 @@ Uk = SX.sym('Uk',nu);
 XN = Xk;
 UN = SX.sym('UN',0);
 [Xik, Etak] = tnf.Phi(Xk);
-Vk = dyn.V(Xk,Uk);
 HESSk = SX.sym('HESSk',nx+nu,nx+nu);
 HESSN = SX.sym('HESSN',nx,nx);
 LMUk = SX.sym('LMUk',ngk);
@@ -35,7 +34,7 @@ dgk = jacobian(gk,[Xk;Uk]);
 d2gk = HESSk + jacobian(dgk.'*(UMUk-LMUk), [Xk; Uk]);
 gkfun = Function('trans_gk', {Xk, Uk, LMUk, UMUk, HESSk, P}, {d2gk, dgk(:,1:nx), dgk(:,nx+(1:nu)), -gk, -gk});
 gkfun.generate('trans_gk.c');
-movefile('trans_gk.c',taget_dir);
+movefile('trans_gk.c',target_dir);
 
 % gN
 gN = [Xik.'*ocpopts.P*Xik; Etak(2); 4*dyn.g*(dyn.r^2+Xik(1)).^(3/2).*sin(Etak(3)) + (Xik(2).^2  - 2*(-ocpopts.K*Xik)'.*(dyn.r^2+Xik(1))).*sin(Etak(1)-Etak(3))];

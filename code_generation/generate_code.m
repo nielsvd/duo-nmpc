@@ -15,11 +15,11 @@ ocpopts.K = lqr(dyn.Atr,dyn.Btr,ocpopts.Q,ocpopts.R);
 ocpopts.e = 0.0033;
 ocpopts.M = 5;
 % Target directory
-target_dir = '../controller_library/codegen'
+target_dir = '../controller_library/codegen';
 % Empty funs-folder
-delete([target_dir,'/*.o');
-delete([target_dir,'/*.c');
-delete([target_dir,'/*.h');
+delete([target_dir,'/*.o']);
+delete([target_dir,'/*.c']);
+delete([target_dir,'/*.h']);
 % Set-up transverse OCP
 generate_transverse_ocp(target_dir,dims,dyn,tnf,ocpopts);
 % Set-up tangential OCP

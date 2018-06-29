@@ -99,12 +99,6 @@ beta = [m/(2*sqrt(r^2+xi(1))*cos(eta(1)-eta(3))), 0; 0, 1];
 tnf.alpha = Function('alpha',{xi,eta},{alpha});
 tnf.beta = Function('beta',{xi,eta},{beta});
 tnf.kappa = Function('kappa',{xi,eta,vtr,vta},{alpha + beta*[vtr;vta]});
-% alpha_E = [-(m*(4*(r^2+xi(1))*(-g*cos(eta(1))*sqrt(r^2+xi(1)) + eta(2)^2*(r^2+xi(1))) + xi(2)^2))/(4*(r^2+xi(1))^(3/2)); 0];
-% beta_E = [m/(2*sqrt(r^2+xi(1))), 0; 0, 1];
-% tnf.kappa_E = Function('kappa',{xi,eta,vtr,vta},{alpha_E + beta_E*[vtr;vta]});
-% kappa_E = [(m*(4*g*(r^2+cos(eta(1))*xi(1))^(3/2) - cos(eta(1)^3*xi(2)^2+2*cos(eta(1))*(r^2+cos(eta(1))^2*xi(1))*vtr)))/(4*(r^2+cos(eta(1))^2*xi(1))^(3/2));vta];
-kappa_E = [m/4*(4*g + 2*vtr/sqrt(r^2+cos(eta(1))^2*xi(1)) - cos(eta(1))^3*xi(2)^2/(r^2 + cos(eta(1))^2*xi(1))^(3/2));vta];
-tnf.kappa_E = Function('kappa_E',{xi,eta,vtr,vta},{kappa_E});
 
 
 % Add LQ integrator to dynamics struct
@@ -116,13 +110,6 @@ lagcostfun = Function('lagcost',{x,u},{xdot, lagcost});
 dyn.lag_cost = Function('lagcost',{x,u},{lagcost});
 stage_cost = rk4q(lagcostfun,x,u,dt,1);
 dyn.stage_cost = Function('stage_cost',{x,u,Q,R,dt},{stage_cost}); 
-
-%
-% LQR_stage = stage_cost_gen(dt, xi, vtr, Q, R);
-% Wd = 0.5*hessian(LQR_stage,[xi;vtr]);
-% % Rd = 0.5*hessian(LQR_stage,vtr);
-% dyn.DLQR = Function('Qd',{Q,R,dt},{Wd});
-% dyn.V = Function('V',{x,u},{alphadd});
 
 end
 
