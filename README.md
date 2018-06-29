@@ -25,3 +25,4 @@ A sequential dual-objective NMPC scheme applied to a planar quadrotor. Optimize 
 
 ## Remarks
 * Note that currently only Nta < Ntr is supported, i.e. the economic prediction horizon must be shorter than the manifold stabilizing prediction horizon.
+* The ``lapack`` and ``blas`` libraries are assumed to be installed in ``/usr/lib/``.

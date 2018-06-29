@@ -6,7 +6,7 @@ import casadi.*
 
 % Generate code for NLPs
 ocpopts.Ntr = 50;
-ocpopts.Nta = 40;
+ocpopts.Nta = 40; % Nta > Ntr is currently not supported!
 ocpopts.dt = 0.02;
 ocpopts.Q = diag([1 1]);
 ocpopts.R = 0.001;
