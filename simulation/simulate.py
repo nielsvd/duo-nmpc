@@ -1,5 +1,4 @@
 from sqp_interface import *
-from math import sqrt
 from numpy import *
 from quadrotor import quadrotor_xplus
 import matplotlib.pyplot as plt
@@ -28,7 +27,7 @@ uig = [9.81, 0]
 ### 2. Initial guess for inputs (for initializing SQP solution)
 ### 3. Number of SQP iterations (same for both NLPs here)
 ### 4. Minimum eigenvalue clipped to in Hessian regularization scheme
-duo_nmpc = DuoNmpc(x0, uig, 10, 1e-4)
+duo_nmpc = DuoNmpc(x0, uig, 3, 1e-4)
 
 # Pre-allocate the simulation, timing and kkt trajectories
 X = zeros((nx,Nsim+1))

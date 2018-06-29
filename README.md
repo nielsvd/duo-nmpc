@@ -5,7 +5,7 @@ A sequential dual-objective NMPC scheme applied to a planar quadrotor. Optimize 
 ## Requirements
 * A Linux OS
 * matlab
-* python (>=3)
+* python (>=3), with numpy and matplotlib
 * swig, tested with v3.0.12
 * gcc, g++
 * blas
@@ -17,5 +17,11 @@ A sequential dual-objective NMPC scheme applied to a planar quadrotor. Optimize 
   
 ## How to use
 * From Matlab, execute ``code_generation/generate_code.m``
-* In a terminal, browse to ``controller_library`` and execute ``make install``
+* In a terminal, browse to ``controller_library``
+  * Point to python include directory: ``export PYTHONINC=...``, e.g.``export PYTHONINC=/usr/include/python3.6m``
+  * Point to acados installation directory: ``export ACADOS=...``
+  * and execute ``make install``
 * Use Python to run ``simulation/simulate.py`` for simulations
+
+## Remarks
+* Note that currently only Nta < Ntr is supported, i.e. the economic prediction horizon must be shorter than the manifold stabilizing prediction horizon.

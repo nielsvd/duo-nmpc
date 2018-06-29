@@ -12,14 +12,13 @@ IFACE_OBJS+=transverse_ocp.o
 IFACE_OBJS+=tangential_ocp.o
 IFACE_OBJS+=duo_nmpc.o
 
-PYTHONINC=-I/usr/include/python3.6m
-INC=-I$(HOME)/.local/include
-INC+=-I$(HOME)/.local/include/blasfeo/include
-INC+=-I$(HOME)/.local/include/hpipm/include
+INC=-I$(ACADOS)/include
+INC+=-I$(ACADOS)/include/blasfeo/include
+INC+=-I$(ACADOS)/include/hpipm/include
 CFLAGS=-O2 -fPIC
 CXXFLAGS=-O2 -fPIC -std=c++11
 
-LDFLAGS=-L$(HOME)/.local/lib
+LDFLAGS=-L${ACADOS}/lib
 LDFLAGS+=-rdynamic -lacados_c -lacore -lhpipm -lblasfeo -lqpOASES_e -lm -ldl
 
 INSTALLDIR=../simulation/
@@ -38,7 +37,7 @@ _sqp_interface.so: $(BACKEND_OBJS) $(IFACE_OBJS) sqp_interface_python.o
 
 sqp_interface_python.o: sqp_interface.i $(DEPS)
 	swig -c++ -python -o sqp_interface_python.cxx sqp_interface.i
-	$(CXX) -c -o $@ sqp_interface_python.cxx $(CXXFLAGS) $(INC) $(PYTHONINC)
+	$(CXX) -c -o $@ sqp_interface_python.cxx $(CXXFLAGS) $(INC) -I$(PYTHONINC)
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(INC)
