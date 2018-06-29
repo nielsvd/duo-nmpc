@@ -19,7 +19,7 @@ A sequential dual-objective NMPC scheme applied to a planar quadrotor. Optimize 
 * From Matlab, execute ``code_generation/generate_code.m``
 * In a terminal, browse to ``controller_library``
   * Point to python include directory: ``export PYTHONINC=...``, e.g.``export PYTHONINC=/usr/include/python3.6m``
-  * Point to acados installation directory: ``export ACADOS=...``
+  * Point to acados installation directory: ``export ACADOS=...``, i.e. where the ``include`` and ``lib`` directories live (such as the root dir of the GIT repo after compilation).
   * and execute ``make install``
 * Use Python to run ``simulation/simulate.py`` for simulations
 
