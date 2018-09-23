@@ -3,7 +3,7 @@ CXX=g++
 
 BACKEND_OBJS=casadi_interface.o
 BACKEND_OBJS+=sqp.o
-BACKEND_OBJS+=regularize_hessian.o
+BACKEND_OBJS+=regularize_hessian2.o
 
 AUTOGEN_SRCS=$(wildcard codegen/*.c)
 IFACE_OBJS=$(AUTOGEN_SRCS:.c=.o)
@@ -39,6 +39,10 @@ _sqp_interface.so: $(BACKEND_OBJS) $(IFACE_OBJS) sqp_interface_python.o
 sqp_interface_python.o: sqp_interface.i $(DEPS)
 	swig -c++ -python -o sqp_interface_python.cxx sqp_interface.i
 	$(CXX) -c -o $@ sqp_interface_python.cxx $(CXXFLAGS) $(INC) -I$(PYTHONINC)
+
+sqp_interface_matlab.o: sqp_interface.i $(DEPS)
+	swig -c++ -matlab -o sqp_interface_matlab.cxx sqp_interface.i
+	$(CXX) -c -o $@ sqp_interface_matlab.cxx $(CXXFLAGS) $(INC) -I$(MATLABINC)
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(INC)
