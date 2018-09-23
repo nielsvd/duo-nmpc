@@ -3,3 +3,6 @@
 *.py
 *.pyc
 *.cxx
+*.mexa64
+*.m
++*

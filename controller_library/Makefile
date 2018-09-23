@@ -3,7 +3,7 @@ CXX=g++
 
 BACKEND_OBJS=casadi_interface.o
 BACKEND_OBJS+=sqp.o
-BACKEND_OBJS+=regularize_hessian2.o
+BACKEND_OBJS+=regularize_hessian.o
 
 AUTOGEN_SRCS=$(wildcard codegen/*.c)
 IFACE_OBJS=$(AUTOGEN_SRCS:.c=.o)
@@ -20,20 +20,25 @@ CFLAGS=-O2 -fPIC
 CXXFLAGS=-O2 -fPIC -std=c++11
 
 LDFLAGS=-L${ACADOS}/lib
-LDFLAGS+=-rdynamic -lacados_c -lacore -lhpipm -lblasfeo -lqpOASES_e -lm -ldl
+LDFLAGS+=-lacados_c -lacore -lhpipm -lblasfeo -lqpOASES_e -lm -ldl
 
-INSTALLDIR=../simulation/
+PY_INSTALLDIR=../simulation_py/
+M_INSTALLDIR=../simulation_m/
 
 all: libsqp_interface.so _sqp_interface.so
 
-install: _sqp_interface.so
-	cp -f _sqp_interface.so $(INSTALLDIR)
-	cp -f sqp_interface.py $(INSTALLDIR)
+install: _sqp_interface.so sqp_interfaceMEX.mexa64
+	cp -f _sqp_interface.so sqp_interface.py $(PY_INSTALLDIR)
+	cp -f sqp_interfaceMEX.mexa64 SwigGet.m SwigMem.m SwigRef.m $(M_INSTALLDIR)
+	cp -rf +sqp_interface $(M_INSTALLDIR)
 
 libsqp_interface.so: $(BACKEND_OBJS) $(IFACE_OBJS)
 	$(CXX) -o $@ -shared $^ $(CXXFLAGS) $(INC) $(LDFLAGS)
 
 _sqp_interface.so: $(BACKEND_OBJS) $(IFACE_OBJS) sqp_interface_python.o
+	$(CXX) -o $@ -shared $^ $(CXXFLAGS) $(INC) $(LDFLAGS)
+
+sqp_interfaceMEX.mexa64: $(BACKEND_OBJS) $(IFACE_OBJS) sqp_interface_matlab.o
 	$(CXX) -o $@ -shared $^ $(CXXFLAGS) $(INC) $(LDFLAGS)
 
 sqp_interface_python.o: sqp_interface.i $(DEPS)
@@ -54,4 +59,4 @@ sqp_interface_matlab.o: sqp_interface.i $(DEPS)
 	$(CC) -c -o $@ $< $(CXXFLAGS) $(INC)
 
 clean:
-	rm -rf *.o codegen/*.o *.so sqp_interface __pycache__ sqp_interface.py *_python.cxx *_python.h
+	rm -rf *.o codegen/*.o *.so sqp_interface __pycache__ +* sqp_interface.py *_python.cxx *_python.h *_matlab.cxx Swig*.m *.mexa64
