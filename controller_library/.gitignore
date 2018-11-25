@@ -3,3 +3,8 @@
 *.py
 *.pyc
 *.cxx
++*
+SwigGet.m
+SwigMem.m
+SwigRef.m
+*.mexa64
